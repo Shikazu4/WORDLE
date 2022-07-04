@@ -3,7 +3,7 @@ var width = 5;
 var row = 0;
 var col = 0;
 var gameOver = false;
-var word = "LUKAS";
+var word = "ERASE";
 var guess = "";
 
 var dictionary = {
@@ -159,6 +159,7 @@ function update() {
 
         let currTile = document.getElementById(row.toString() + '-' + c.toString());
         let letter = currTile.innerText;
+        let letter2 = letter;
 
         //correct position
         if (tempWord[c] == letter) {
@@ -177,13 +178,14 @@ function update() {
 
                     if (tempWord[i] != tempGuess[i]) {    //lulat yggyy
                         tempWord[i] = " ";
+                        letter = " ";
                         currTile.classList.add("present");
-                        let kTile = document.getElementById("Key"+letter);
+                        let kTile = document.getElementById("Key"+letter2);
                         if ( !kTile.classList.contains("correct"))
                         {
                         kTile.classList.add("present");
                         }
-                        letter = " ";
+                       
 
                     }
 
@@ -196,6 +198,8 @@ function update() {
         //absent
         else {
             currTile.classList.add("absent");
+            let kTile = document.getElementById("Key"+letter);
+            kTile.classList.add("absent");
         }
 
         if (correct == width) {
