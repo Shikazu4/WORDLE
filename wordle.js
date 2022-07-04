@@ -3,7 +3,7 @@ var width = 5;
 var row = 0;
 var col = 0;
 var gameOver = false;
-var word = "ATOLL";
+var word = "GRASS";
 var guess = "";
 
 var dictionary = {
@@ -66,8 +66,6 @@ function initialize() {
                     guess += currTile.innerText;
                 }
                 update();
-                row++;
-                col = 0;
             }
 
         }
@@ -82,7 +80,7 @@ function initialize() {
 
 function update() {
     var guessWord = getGuess().toLocaleUpperCase();
-    var validword = dictionary[guess.charAt(0)][0][guessWord];
+    var validword = dictionary[guessWord.charAt(0)][0][guessWord];
     if (validword) {
     let correct = 0;
 
@@ -139,10 +137,10 @@ function update() {
 }
 
 function getGuess() {
-    var guess = "";
+    var guessWord = "";
     for (let i = 0; i < width; i++) {
-        guess = guess + document.getElementById(row.toString() + '-' + i.toString()).innerText;
+        guessWord = guessWord + document.getElementById(row.toString() + '-' + i.toString()).innerText;
     }
-    return guess.toLocaleLowerCase();
+    return guessWord.toLocaleLowerCase();
 }
 
