@@ -14,7 +14,25 @@ var dictionary = {
     "E": letterE,
     "F": letterF,
     "G": letterG,
-    "H": letterH
+    "H": letterH,
+    "I": letterI,
+    "J": letterJ,
+    "K": letterK,
+    "L": letterL,
+    "M": letterM,
+    "N": letterN,
+    "O": letterO,
+    "P": letterP,
+    "Q": letterQ,
+    "R": letterR,
+    "S": letterS,
+    "T": letterT,
+    "U": letterU,
+    "V": letterV,
+    "W": letterW,
+    "X": letterX,
+    "Y": letterY,
+    "Z": letterZ,
 };
 
 
@@ -52,6 +70,7 @@ function initialize() {
         }
 
         else if (e.code == "Backspace") {
+            document.getElementById("answer").innerText = "";
             if (0 < col && col <= width)
                 col--;
             let currTile = document.getElementById(row.toString() + '-' + col.toString());
@@ -131,7 +150,7 @@ function update() {
     col = 0;
     document.getElementById("answer").innerText = "";
 } else {
-    document.getElementById("answer").innerText = "OOPS! Word doesn't exist in dictionary. Try again";
+    document.getElementById("answer").innerText = "OOPS! Word not Found. Try again";
     document.getElementById("answer").classList.add("error");
 }
 }
