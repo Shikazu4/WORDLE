@@ -192,6 +192,7 @@ function update() {
             else {
                 currTile.classList.add("absent");
                 let kTile = document.getElementById("Key" + letter);
+                if(!kTile.classList.contains("correct") && !kTile.classList.contains("present"))
                 kTile.classList.add("absent");
             }
 
