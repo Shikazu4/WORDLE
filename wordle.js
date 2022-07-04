@@ -3,7 +3,7 @@ var width = 5;
 var row = 0;
 var col = 0;
 var gameOver = false;
-var word = "GRASS";
+var word = "LUKAS";
 var guess = "";
 
 var dictionary = {
@@ -53,48 +53,96 @@ function initialize() {
             document.getElementById("board").appendChild(tile);
         }
 
+
+    //keyboard
+    let keyboard = [["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+                    ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+                    ["Enter", "Z", "X", "C", "V", "B", "N", "M", "⌫"]];
+
+    for(let i=0; i<3;i++){
+        let currRow = keyboard[i];
+        let kbrow = document.createElement("div");
+        kbrow.classList.add("keyboardRow");
+
+        for(let j=0; j< currRow.length; j++){
+            let kTile = document.createElement("div");
+            let key = currRow[j];
+            kTile.innerText= key;
+
+            if(key == "Enter"){
+                kTile.id = "Enter";
+
+            }
+            else if (key == "⌫")
+                kTile.id = "Backspace";
+            else if ("A" <= key && key <= "Z"){
+                kTile.id = "Key" + key;
+            }
+
+            kTile.addEventListener("click", processKey);
+
+            if (key == "Enter"){
+                kTile.classList.add("enterTile")
+            }
+            else{
+                kTile.classList.add("keyTile");
+            }
+            kbrow.appendChild(kTile);
+
+        }
+        document.body.appendChild(kbrow);
+    }
+
     //populating
-    document.addEventListener("keyup", (e) => { //arrow function
-        if (gameOver) return;
-        // alert(e.code);
-
-        if ("KeyA" <= e.code && e.code <= "KeyZ") {
-            if (col < width) {
-                let currTile = document.getElementById(row.toString() + '-' + col.toString());
-                if (currTile.innerText == "") {
-                    currTile.innerText = e.code[3];
-                    col++;
-                }
-
-            }
-        }
-
-        else if (e.code == "Backspace") {
-            document.getElementById("answer").innerText = "";
-            if (0 < col && col <= width)
-                col--;
-            let currTile = document.getElementById(row.toString() + '-' + col.toString());
-            currTile.innerText = "";
-        }
-
-        else if (e.code == "Enter") {
-            if (col == width) {
-                guess = "";
-                for (let c = 0; c < width; c++) {
-                    let currTile = document.getElementById(row.toString() + '-' + c.toString());
-                    guess += currTile.innerText;
-                }
-                update();
-            }
-
-        }
-
-        if (!gameOver && row == height) {
-            gameOver = true;
-            document.getElementById("answer").innerText = word;
-        }
+    document.addEventListener("keyup", (e) => { 
+        processInput(e);
     })
 
+}
+
+function processKey(){
+    let e = {"code" : this.id};
+    processInput(e);
+}
+
+function processInput(e) {
+if (gameOver) return;
+
+    if ("KeyA" <= e.code && e.code <= "KeyZ") {
+        if (col < width) {
+            let currTile = document.getElementById(row.toString() + '-' + col.toString());
+            if (currTile.innerText == "") {
+                currTile.innerText = e.code[3];
+                col++;
+            }
+
+        }
+    }
+
+    else if (e.code == "Backspace") {
+        document.getElementById("answer").innerText = "";
+        if (0 < col && col <= width)
+            col--;
+        let currTile = document.getElementById(row.toString() + '-' + col.toString());
+        currTile.innerText = "";
+    }
+
+    else if (e.code == "Enter") {
+        if (col == width) {
+            guess = "";
+            for (let c = 0; c < width; c++) {
+                let currTile = document.getElementById(row.toString() + '-' + c.toString());
+                guess += currTile.innerText;
+            }
+            update();
+        }
+
+    }
+
+    if (!gameOver && row == height) {
+        gameOver = true;
+        document.getElementById("answer").innerText = word;
+    }
 }
 
 function update() {
@@ -115,6 +163,9 @@ function update() {
         //correct position
         if (tempWord[c] == letter) {
             currTile.classList.add("correct");
+            let kTile = document.getElementById("Key"+letter);
+            kTile.classList.remove("present");
+            kTile.classList.add("correct");
             correct++;
             tempWord[c] = " ";
         }
@@ -126,8 +177,13 @@ function update() {
 
                     if (tempWord[i] != tempGuess[i]) {    //lulat yggyy
                         tempWord[i] = " ";
-                        letter = " ";
                         currTile.classList.add("present");
+                        let kTile = document.getElementById("Key"+letter);
+                        if ( !kTile.classList.contains("correct"))
+                        {
+                        kTile.classList.add("present");
+                        }
+                        letter = " ";
 
                     }
 

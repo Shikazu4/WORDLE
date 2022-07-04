@@ -18,7 +18,7 @@ hr {
 }
 
 #board{
-    width: 354px;
+    width: 350px;
     height: 420px;
     background-color : rgb(22, 21, 21); 
     margin: 0 auto;
@@ -69,4 +69,41 @@ hr {
     font-size: 25px;
 }
 
+.keyboardRow {
+    width: 400px;
+    align-items: center;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.enterTile {
+/* box */
+border: 1px solid lightgray;
+width: 75px;
+height: 40px;
+margin: 1px;
+
+/* text */
+font-size: 20px;
+font-weight: bold;
+justify-content: center;
+align-items: center;
+display: flex;
+}
+
+.keyTile{
+    /* box */
+border: 1px solid lightgray;
+width: 36px;
+height: 40px;
+margin: 1px;
+
+/* text */
+font-size: 20px;
+font-weight: bold;
+justify-content: center;
+align-items: center;
+display: flex;
+}
 
