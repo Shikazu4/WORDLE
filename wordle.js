@@ -6,6 +6,18 @@ var gameOver = false;
 var word = "ATOLL";
 var guess = "";
 
+var dictionary = {
+    "A": letterA,
+    "B": letterB,
+    "C": letterC,
+    "D": letterD,
+    "E": letterE,
+    "F": letterF,
+    "G": letterG,
+    "H": letterH
+};
+
+
 window.onload = function () {
     initialize();
 }
@@ -69,13 +81,14 @@ function initialize() {
 }
 
 function update() {
+    var guessWord = getGuess().toLocaleUpperCase();
+    var validword = dictionary[guess.charAt(0)][0][guessWord];
+    if (validword) {
     let correct = 0;
 
     let tempGuess = guess.split('');
 
     let tempWord = word.split('');
-
-
 
     for (let c = 0; c < width; c++) {
 
@@ -116,4 +129,20 @@ function update() {
             gameOver = true;
         }
     }
+    row++;
+    col = 0;
+    document.getElementById("answer").innerText = "";
+} else {
+    document.getElementById("answer").innerText = "OOPS! Word doesn't exist in dictionary. Try again";
+    document.getElementById("answer").classList.add("error");
 }
+}
+
+function getGuess() {
+    var guess = "";
+    for (let i = 0; i < width; i++) {
+        guess = guess + document.getElementById(row.toString() + '-' + i.toString()).innerText;
+    }
+    return guess.toLocaleLowerCase();
+}
+
