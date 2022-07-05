@@ -106,3 +106,23 @@ hr {
     align-items: center;
     display: flex;
 }
+
+.animate {
+    animation: flip 1s ease;
+}
+
+@keyframes flip {
+    0% {
+        transform: scaleY(1);
+    }
+
+    50% {
+        transform: scaleY(0);
+    }
+
+    100% {
+        transform: scaleY(1);
+    }  
+}
+
+

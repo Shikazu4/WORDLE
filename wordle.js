@@ -3,7 +3,7 @@ var width = 5;
 var row = 0;
 var col = 0;
 var gameOver = false;
-var word = "ERASE";
+var word = "BRASS";
 var guess = "";
 
 var dictionary = {
@@ -159,52 +159,61 @@ function update() {
             let currTile = document.getElementById(row.toString() + '-' + c.toString());
             let letter = currTile.innerText;
             let letter2 = letter;
+            let kTile = document.getElementById("Key" + letter);
+            const animation_duration = 1000;
 
-            //correct position
-            if (tempWord[c] == letter) {
-                currTile.classList.add("correct");
-                let kTile = document.getElementById("Key" + letter);
-                kTile.classList.remove("present");
-                kTile.classList.add("correct");
-                correct++;
-                tempWord[c] = " ";
-            }
+            setTimeout(() => {
+                //correct position
+                if (tempWord[c] == letter) {
+                    currTile.classList.add("correct");
+                    kTile.classList.remove("present");
+                    kTile.classList.add("correct");
+                    correct++;
+                    tempWord[c] = " ";
+                }
 
-            // wrong position
-            else if (tempWord.includes(letter)) {
-                for (let i = 0; i < width; i++) {
-                    if (tempWord[i] == letter) {
+                // wrong position
+                else if (tempWord.includes(letter)) {
+                    for (let i = 0; i < width; i++) {
+                        if (tempWord[i] == letter) {
 
-                        if (tempWord[i] != tempGuess[i]) {    //lulat yggyy
-                            tempWord[i] = " ";
-                            letter = " ";
-                            currTile.classList.add("present");
-                            let kTile = document.getElementById("Key" + letter2);
-                            if (!kTile.classList.contains("correct")) {
-                                kTile.classList.add("present");
+                            if (tempWord[i] != tempGuess[i]) {    //lulat yggyy
+                                tempWord[i] = " ";
+                                letter = " ";
+                                currTile.classList.add("present");
+                                if (!kTile.classList.contains("correct")) {
+                                    kTile.classList.add("present");
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            //absent
-            else {
-                currTile.classList.add("absent");
-                let kTile = document.getElementById("Key" + letter);
-                if(!kTile.classList.contains("correct") && !kTile.classList.contains("present"))
-                kTile.classList.add("absent");
-            }
+                //absent
+                else {
+                    currTile.classList.add("absent");
+                    if (!kTile.classList.contains("correct") && !kTile.classList.contains("present"))
+                        kTile.classList.add("absent");
+                }
+
+                currTile.classList.add("animate");
+
+            }, ((c + 1) * animation_duration) / 2);
+
+
+
+
 
             if (correct == width) {
                 gameOver = true;
             }
         }
-        
+
         row++;
         col = 0;
         document.getElementById("answer").innerText = "";
-    } else {
+    }
+    else {
         document.getElementById("answer").innerText = "OOPS! Word not Found. Try again";
         document.getElementById("answer").classList.add("error");
     }
